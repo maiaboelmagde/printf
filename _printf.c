@@ -88,7 +88,7 @@ int _printf(const char *format, ...)
 	  {'s', write_string}, {'c', write_char}
 	, {'%', write_specifier}, {'d', print_int}
 	, {'i', print_int}, {'b', print_binary}
-	, {'r', reverse_string}
+	, {'r', reverse_string}, {'R', rev_rot13}
 	, {'o', print_octal}, {'u', print_unsigned}
 	, {'x', print_hex}, {'X', print_Hex}, {'S', print_hex_str}
 	, {'p', print_address},};

@@ -29,6 +29,7 @@ int print_hex_ptr(va_list ap);
 int print_hex(va_list ap);
 int print_Hex(va_list ap);
 int reverse_string(va_list ap);
+int rev_rot13(va_list args);
 int len_int(int ap);
 int _printf(const char *format, ...);
 int _putchar(char c);
