@@ -1,82 +1,49 @@
 #include "main.h"
-/**
- * print_int_helper - ...
- * @n: ...
- * Return: len of number
- */
-int print_int_helper(int n)
-{
-	int digit, ncpy, remainder, i = 0, len = 0, reverse = 0;
-
-	ncpy = n;
-
-	while (ncpy > 0)
-	{
-		ncpy /= 10;
-		len++;
-	}
-	while (n != 0)
-	{
-		remainder = n % 10;
-		reverse = reverse * 10 + remainder;
-		n /= 10;
-	}
-	while (reverse > 0)
-	{
-		digit = reverse % 10;
-		_putchar (digit + '0');
-		reverse /= 10;
-		i++;
-	}
-	while (i++ < len)
-		_putchar('0');
-
-	return (len);
-}
+#include <string.h>
+#include <unistd.h>
 
 /**
- * handle_int_min -print int min given
- * Return: len of INT_MAX
- */
-int handle_int_min(void)
+ * print_int - a function that writes signed decimal integer
+ * @args:variadic arguments
+ * Return: the number of characters printed
+*/
+int print_int(va_list args)
 {
-	char *my_int_min = "-2147483648";
+	char n;
+	int size, t;
+	unsigned int number;
 
-		while (*my_int_min)
-		{
-			_putchar(*my_int_min);
-			my_int_min++;
-		}
-		return (11);
-}
-/**
- * print_int - print intgers
- * @ap: va_list
- * Return: length of int
- */
-int print_int(va_list ap)
-{
-	int n, len = 0, isNeg = 0;
-
-	n = va_arg(ap, int);
-	if (n == INT_MIN)
+	t = va_arg(args, int);
+	if (t == 0)
 	{
-		len += handle_int_min();
-		return (len);
-	}
-	if (n == 0)
-	{
-		_putchar('0');
+		n = '0';
+		write(STDOUT_FILENO, &n, 1);
 		return (1);
 	}
-	if (n < 0)
+	size = 0;
+	if (t < 0)
 	{
-		_putchar('-');
-		n *= -1;
-		isNeg = 1;
+		n = '-';
+		write(STDOUT_FILENO, &n, 1);
+		size = 1;
+		number = t * -1;
 	}
-	len += print_int_helper(n);
-	if (isNeg)
-		len++;
-	return (len);
+	else
+	{
+		number = t;
+	}
+	t = 1;
+	while ((number / t) > 9)
+		t *= 10;
+
+	while (t != 0)
+	{
+		n = '0' + (number / t);
+		write(STDOUT_FILENO, &n, 1);
+		number %= t;
+		t /= 10;
+		size++;
+	}
+
+	return (size);
 }
