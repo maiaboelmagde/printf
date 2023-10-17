@@ -1,20 +1,20 @@
 #include "main.h"
 void print_Hexadecimal(unsigned int num, int *p)
 {
-    unsigned int rem;
+	unsigned int rem;
 
-    if (num == 0)
-        return;
-    rem = num % 16;
+	if (num == 0)
+		return;
+	rem = num % 16;
 
-    print_Hexadecimal(num / 16, p);
+	print_Hexadecimal(num / 16, p);
 
-    if (rem < 10)
-        _putchar('0' + rem);
-    else
-        _putchar('A' + rem - 10);
+	if (rem < 10)
+		_putchar('0' + rem);
+	else
+		_putchar('A' + rem - 10);
 
-    (void) (*p)++;
+	(void) (*p)++;
 }
 
 /**
@@ -24,15 +24,15 @@ void print_Hexadecimal(unsigned int num, int *p)
  */
 int print_Hex(va_list ap)
 {
-    unsigned int n;
-    int p = 0;
+	unsigned int n;
+	int p = 0;
 
-    n = va_arg(ap, unsigned int);
-    if (n == 0)
-    {
-        _putchar('0');
-        return (1);
-    }
-    print_Hexadecimal(n, &p);
-    return (p);
+	n = va_arg(ap, unsigned int);
+	if (n == 0)
+	{
+		_putchar('0');
+		return (1);
+	}
+	print_Hexadecimal(n, &p);
+	return (p);
 }
