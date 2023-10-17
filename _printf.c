@@ -1,5 +1,4 @@
 #include "main.h"
-#include <string.h>
 #include <unistd.h>
 /**
  * print_string - print inpuit as string
