@@ -2,47 +2,48 @@
 #include <string.h>
 #include <unistd.h>
 /**
-*write_string - a function that writes a string to the standard output
- *@args:variadic arguments
- *Return:the number of characters printed
-*/
-int write_string(va_list args)
+ * print_string - print inpuit as string
+ * @ap: va_list variable
+ * Return:void
+ */
+int print_string(va_list ap)
 {
+	char *ch;
 	int len;
-	char *str;
 
-	str = va_arg(args, char*);
-	if (str == NULL)
-		str = "(null)";
-	len = strlen(str);
-	write(STDOUT_FILENO, str, len);/*printing string to screen*/
-
+	ch = va_arg(ap, char *);
+	if (ch == NULL)
+		ch = "(null)";
+	len = 0;
+	while (*ch != '\0')
+	{
+		_putchar((unsigned char) *ch);
+		ch++;
+		len++;
+	}
 	return (len);
+
 }
+
 /**
- *write_char - a function that writes a char to the standard output
- *@args:variadic arguments
- *Return:the number of characters printed
-*/
-int write_char(va_list args)
+ * print_char - print input as char
+ * @ap:pointer
+ * Return:len of char
+ */
+int print_char(va_list ap)
 {
-	char c;
-
-	c = (char) va_arg(args, int);
-	write(STDOUT_FILENO, &c, 1);/*printing chars to screen*/
-
+	_putchar(va_arg(ap, int));
 	return (1);
 }
 /**
- *write_specifier - a function that writes a specifier to the standard output
- *@args:variadic arguments
- *Return:the number of characters printed
-*/
-int write_specifier(va_list args)
+ * print_mod - print %
+ * @ap: va_lis variable
+ * Return:1
+ */
+int print_mod(va_list ap)
 {
-	(void) args;
-	write(STDOUT_FILENO, "%", 1);/*prints single specifier to screen*/
-
+	(void)ap;
+	_putchar('%');
 	return (1);
 }
 /**
@@ -85,8 +86,8 @@ int _printf(const char *format, ...)
 	va_list args;
 	/*spcifirs array of type specifier_t(struct)with right functions to call*/
 	format_t spacifiers[] = {
-	  {'s', write_string}, {'c', write_char}
-	, {'%', write_specifier}, {'d', print_int}
+	  {'s', print_string}, {'c', print_char}
+	, {'%', print_mod}, {'d', print_int}
 	, {'i', print_int}, {'b', print_binary}
 	, {'r', reverse_string}
 	, {'o', print_octal}, {'u', print_unsigned}
