@@ -2,6 +2,25 @@
 #include <string.h>
 #include <unistd.h>
 /**
+ * _strcpy - cpy a string
+ * @src: char pointer
+ * @dest: char pointer
+ * Return: the length *s
+ */
+char *_strcpy(char *dest, char *src)
+{
+	int i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = src[i];
+	return (dest);
+}
+/**
  * rot13 - encodes a string into  rot13.
  * @src: string refrance
  * Return: *src encodd string into  rot13.
