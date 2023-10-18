@@ -2,7 +2,6 @@
 
 /**
  * len_int - calculate length of int
- *
  * @ap: int
  * Return:int
  */
