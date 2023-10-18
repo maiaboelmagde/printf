@@ -3,8 +3,9 @@
 #include <unistd.h>
 /**
 *write_string - a function that writes a string to the standard output
- *@args:variadic arguments
- *Return:the number of characters printed
+*
+*@args:variadic arguments
+*Return:the number of characters printed
 */
 int write_string(va_list args)
 {
