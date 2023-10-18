@@ -1,37 +1,44 @@
 #include "main.h"
-#include <string.h>
 #include <unistd.h>
 /**
 *write_string - a function that writes a string to the standard output
-*
-*@args:variadic arguments
-*Return:the number of characters printed
+ *@args:variadic arguments
+ *Return:the number of characters printed
 */
-int write_string(va_list args)
+int write_string(va_list val)
 {
 	int len;
+	int i;
 	char *str;
 
-	str = va_arg(args, char*);
+	str = va_arg(val, char *);
 	if (str == NULL)
+	{
 		str = "(null)";
-	len = strlen(str);
-	write(STDOUT_FILENO, str, len);/*printing string to screen*/
-
-	return (len);
+		len = _strlen(str);
+		for(i=0;i<len;i++)
+			_putchar(str[i]);
+		return (len);
+	}
+	else
+	{
+		len = _strlen(str);
+		for(i=0;i<len;i++)
+			_putchar(str[i]);
+		return (len);
+	}
 }
 /**
  *write_char - a function that writes a char to the standard output
  *@args:variadic arguments
  *Return:the number of characters printed
 */
-int write_char(va_list args)
+int write_char(va_list val)
 {
-	char c;
+	char str;
 
-	c = (char) va_arg(args, int);
-	write(STDOUT_FILENO, &c, 1);/*printing chars to screen*/
-
+	str = va_arg(val, int);
+	_putchar(str);
 	return (1);
 }
 /**
