@@ -1,122 +1,127 @@
 #include "main.h"
-#include <string.h>
-#include <unistd.h>
+
+int hash(char c, int *i);
 /**
-*write_string - a function that writes a string to the standard output
- *@args:variadic arguments
- *Return:the number of characters printed
-*/
-int write_string(va_list args)
+ * plus_spaces - handle plus and spaces after % sign
+ * @c: the char after %
+ * @num: number that will be printed after
+ * Return: len of printed char
+ */
+int plus_spaces(char c, int num)
 {
-	int len;
-	char *str;
+	int len = 0;
 
-	str = va_arg(args, char*);
-	if (str == NULL)
-		str = "(null)";
-	len = strlen(str);
-	write(STDOUT_FILENO, str, len);/*printing string to screen*/
-
-	return (len);
-}
-/**
- *write_char - a function that writes a char to the standard output
- *@args:variadic arguments
- *Return:the number of characters printed
-*/
-int write_char(va_list args)
-{
-	char c;
-
-	c = (char) va_arg(args, int);
-	write(STDOUT_FILENO, &c, 1);/*printing chars to screen*/
-
-	return (1);
-}
-/**
- *write_specifier - a function that writes a specifier to the standard output
- *@args:variadic arguments
- *Return:the number of characters printed
-*/
-int write_specifier(va_list args)
-{
-	(void) args;
-	write(STDOUT_FILENO, "%", 1);/*prints single specifier to screen*/
-
-	return (1);
-}
-/**
-*is_specifier - a function that checks if there is a specifier in the format
- *@spacifiers: array of structs containing different conversion specifiers
- *@format: pointer to an array containing the string of chars to be handled
- *Return: -1 in case of reaching the end of format
- *		  (i) in case of finding a match to the specifier
-*/
-int is_specifier(format_t spacifiers[], char *format)
-{
-	int i;
-	char fchar;
-
-	i = 0;
-	if (format[i] == '%')
+	if (c == '+')
 	{
-		if (format[i + 1] == '\0')
-			return (-1);/*error*/
-		fchar = format[i + 1];
-		/*select spacifier function*/
-		for (i = 0; i < 14; i++)/*loop through each specifier in array*/
+		int check_isNeg;
+
+		check_isNeg = num > 0 ? 0 : 1;
+		if (!check_isNeg)
 		{
-			/*checking for a match in the format given*/
-			if (spacifiers[i].ch == fchar)
-				return (i);/*return element No. to get the right function*/
+			_putchar('+');
+			len++;
 		}
 	}
-	/*not found*/
-	return (-2);
+	else
+	{
+		_putchar(' ');
+		len++;
+	}
+	return (len);
 }
+
 /**
- *_printf - a function to print a string using a format
- *@format: pointer to an array containing the string of chars to be handled
- *Return: count or error upon failing (-1)
+ * _printf - print f function
+ * @format: the string will be printed
+ * Return: number of digits printed
  */
 int _printf(const char *format, ...)
 {
-	int i, s_index, write_count;
-	va_list args;
-	/*spcifirs array of type specifier_t(struct)with right functions to call*/
-	format_t spacifiers[] = {
-	  {'s', write_string}, {'c', write_char}
-	, {'%', write_specifier}, {'d', print_int}
-	, {'i', print_int}, {'b', print_binary}
-	, {'r', reverse_string}, {'R', rev_rot13}
-	, {'o', print_octal}, {'u', print_unsigned}
-	, {'x', print_hex}, {'X', print_Hex}, {'S', print_hex_str}
-	, {'p', print_address},};
+	int j, i = 0, len = 0;
+	va_list ap;
 
-	if (format == NULL)
+	format_t fun[] = {{'c', print_char}, {'s', print_string},
+		{'%', print_mod}, {'i', print_int},
+		{'d', print_int}, {'r', reverse_string},
+		{'x', print_hex}, {'X', print_Hex},
+		{'o', print_octal}, {'u', print_unsigned},
+		{'b', print_binary}, {'p', print_address},
+		{'S', print_hex_str}
+	};
+
+	va_start(ap, format);
+
+	if ((!format) || (format[0] == '%' && !format[1]))
 		return (-1);
 
-	va_start(args, format);
-	write_count = 0;
-	for (i = 0; (format != NULL) && (format[i] != '\0'); i++)
+	while (format[i])
 	{
-		s_index = is_specifier(spacifiers, (char *) (format + i));
+		if (format[i] == '%')
+		{
+			if (format[i + 1] == '\0')
+				return (-1);
+			if (format[i + 1] == '+' || format[i + 1] == ' ')
+			{
+				va_list dest;
 
-		if (s_index == -2)
-		{
-			write(STDOUT_FILENO, (char *) (format + i), 1);
-			write_count++;
-		}
-		else if (s_index == -1)
-		{
-			return (-1);
+				va_copy(dest, ap);
+				len += plus_spaces(format[i + 1], va_arg(dest, int));
+				i++;
+			}
+			else if (format[i + 1] == '#')
+			{
+				len += hash(format[i + 2], &i);
+			}
+			j = 0;
+			while (j < 13)
+			{
+				if (format[i + 1] == fun[j].ch)
+				{
+					int temp = fun[j].f(ap);
+					if (temp==0){
+					_putchar('%');
+					_putchar(format[i+1]);
+					}
+					len+=temp;
+					i += 2;
+					break;
+				}
+				j++;
+			}
 		}
 		else
 		{
-			write_count = write_count + spacifiers[s_index].f(args);
+			_putchar(format[i]);
+			len++;
 			i++;
+
 		}
 	}
-	va_end(args);
-return (write_count);
+	va_end(ap);
+	return (len);
+}
+/**
+ * hash - handle after the hash sign
+ * @c: the char after # sign
+ * @i: pointer to current char of @format
+ * Return: len of printed char
+ */
+int hash(char c, int *i)
+{
+	int len = 0;
+
+	if (c == 'x' || c == 'X')
+	{
+		_putchar('0');
+		_putchar('x');
+		len += 2;
+		(*i)++;
+	}
+	else if (c == 'o')
+	{
+		_putchar('0');
+		len++;
+		(*i)++;
+	}
+	return (len);
 }
