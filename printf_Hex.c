@@ -1,4 +1,9 @@
 #include "main.h"
+/**
+ * print_Hexadecimal - print hexa
+ * @p: ;en of hex printed
+ * @num: decimal
+ */
 void print_Hexadecimal(unsigned int num, int *p)
 {
 	unsigned int rem;
@@ -18,7 +23,7 @@ void print_Hexadecimal(unsigned int num, int *p)
 }
 
 /**
- * print_hex - print hex
+ * print_Hex - print hex
  * @ap: va_list
  * Return: length of hexa
  */
