@@ -7,30 +7,25 @@
  */
 int printf_pointer(va_list val)
 {
-	void *ptr;
-	char *str = "(nil)";
-	int len;
+	void *p;
+	char *s = "(nil)";
+	long int a;
+	int b;
 	int i;
-	va_list dest;
 
-	va_copy(dest, val);
-	ptr = va_arg(val, void*);
-	if (ptr == NULL)
+	p = va_arg(val, void*);
+	if (p == NULL)
 	{
-		i = 0;
-		while (*str)
+		for (i = 0; s[i] != '\0'; i++)
 		{
-			_putchar(*str);
-			str++;
-			i++;
+			_putchar(s[i]);
 		}
-		va_end(dest);
 		return (i);
 	}
+
+	a = (unsigned long int)p;
 	_putchar('0');
 	_putchar('x');
-	len = printf_hex_aux(dest);
-	va_end(dest);
-	return (len + 2);
-
+	b = printf_hex_aux(a);
+	return (b + 2);
 }
