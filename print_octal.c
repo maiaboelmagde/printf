@@ -1,30 +1,41 @@
 #include "main.h"
+
+/**
+ * print_octal_help - print hexa
+ * @num: decimal
+ * @p: len of printed octal
+ * Return: void
+ */
+void print_octal_help(unsigned int num, int *p)
+{
+	unsigned int rem;
+
+	if (num == 0)
+		return;
+	rem = num % 8;
+
+	print_octal_help(num / 8, p);
+
+	_putchar('0' + rem);
+	(void)(*p)++;
+}
+
 /**
  * print_octal - print hex
- * @val: va_list
+ * @ap: va_list
  * Return: length of hexa
  */
-int print_octal(va_list val)
+int print_octal(va_list ap)
 {
-	unsigned int num = va_arg(val, unsigned int);
-	unsigned int tem = num;
-	int i, counter = 0;
-	int *array;
+	unsigned int n;
+	int p = 0;
 
-	while (num / 8 != 0)
+	n = va_arg(ap, unsigned int);
+	if (n == 0)
 	{
-		num = num / 8;
-		counter++;
+		_putchar('0');
+		return (1);
 	}
-	counter++;
-	array = malloc(sizeof(int) * counter);
-	for (i = 0; i < counter; i++)
-	{
-		array[i] = tem % 8;
-		tem = tem / 8;
-	}
-	for (i = counter - 1; i >= 0; i++)
-		_putchar(array[i] + '0');
-	free(array);
-	return (counter);
+	print_octal_help(n, &p);
+	return (p);
 }

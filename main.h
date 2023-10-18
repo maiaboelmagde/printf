@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <unistd.h>
 
 
 /**
@@ -34,8 +33,8 @@ int rev_rot13(va_list args);
 int len_int(int ap);
 int _printf(const char *format, ...);
 int _putchar(char c);
-int write_char(va_list val);
-int write_string(va_list args);
+int write_char(va_list val)
+int write_string(va_list args)
 int print_int(va_list ap);
 int _strlen(char *str);
 int _strlenc(const char *str);

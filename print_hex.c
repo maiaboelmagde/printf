@@ -2,7 +2,6 @@
 
 /**
  * print_hexadecimal - print hexa
- *
  * @p: ;en of hex printed
  * @num: decimal
  */

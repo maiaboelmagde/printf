@@ -4,11 +4,9 @@
  * @str: string pointer
  * return: 1
 */
-int _strlen(char *str)
-{
+int _strlen(char *str){
 	int i;
-
-	for (i = 0; str[i] != 0; i++)
+	for (i=0;str[i]!=0;i++)
 	return (i);
 }
 /**
@@ -16,10 +14,7 @@ int _strlen(char *str)
  * @str: string pointer
  * return: 1
 */
-int _strlenc(const char *str)
-{
+int _strlenc(const char *str){
 	int i;
-
-	for (i = 0; str[i] != 0; i++)
+	for (i=0;str[i]!=0;i++)
 	return (i);
-}

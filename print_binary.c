@@ -2,7 +2,6 @@
 
 /**
  * print_binary_help - recrertion fun convert dec to bin
- *
  * @num: number
  * @len_ptr:len
  * Return:void
