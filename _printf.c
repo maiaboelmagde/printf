@@ -1,8 +1,7 @@
 #include "main.h"
-#include <unistd.h>
 /**
 *write_string - a function that writes a string to the standard output
- *@args:variadic arguments
+ *@val:variadic arguments
  *Return:the number of characters printed
 */
 int write_string(va_list val)
@@ -30,7 +29,7 @@ int write_string(va_list val)
 }
 /**
  *write_char - a function that writes a char to the standard output
- *@args:variadic arguments
+ *@val:variadic arguments
  *Return:the number of characters printed
 */
 int write_char(va_list val)
@@ -43,7 +42,7 @@ int write_char(va_list val)
 }
 /**
  *write_specifier - a function that writes a specifier to the standard output
- *@args:variadic arguments
+ *@val:variadic arguments
  *Return:the number of characters printed
 */
 int write_specifier(va_list args)
