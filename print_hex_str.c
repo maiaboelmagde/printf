@@ -3,6 +3,7 @@
 #include <unistd.h>
 /**
  * helper_XS - a function that helps
+ *
  * @bcount: count
  * @num: num
  * Return:nothing
