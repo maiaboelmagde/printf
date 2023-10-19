@@ -25,4 +25,4 @@ To use the custom  `printf` function, include the `main.h` header file in your C
 ## Authors
 
 AMINE ABOUALI
-MAI ABOELMAJD
+MAI ABOELMAGDE
